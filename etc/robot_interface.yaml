@@ -1,0 +1,8 @@
+
+robot_interface:
+  driver: RobotDriverRTDE
+  ip: 150.18.227.205
+# port: 0   # optional — RTDE uses a fixed port on the UR controller
+
+network_interface:
+  protocol: zenoh
