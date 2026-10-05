@@ -8,11 +8,9 @@ by `robot_interface` at runtime as a shared library — no mc_rtc dependency req
 
 ## Dependencies
 
-| Dependency | Where to get it | Version |
-|---|---|---|
-| `unified_robot_interface` | Built from this repository | — |
-| `KortexApi` (C++) | Kinova GitHub or CMake auto-fetch | 2.8.0 (configurable) |
-| `fmt` | System package or CMake | ≥ 8.0 |
+- [unified_robot_interface](https://isri-aist.github.io/unified_robot_interface/index.html)
+- [KortexApi](https://github.com/Kinovarobotics/Kinova-kortex2_Gen3_G3L)(2.8.0)
+- [fmt](https://fmt.dev)
 
 ### Installing Kinova Kortex API
 
@@ -80,7 +78,7 @@ Robots:
     module: Kinova
     robot_interface:
       driver: RobotDriverKortex
-      ip: # robot ip
+      ip: "localhost"
       # port: 0          # optional, unused (RTDE uses a fixed port)
 ```
 

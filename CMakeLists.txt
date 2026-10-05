@@ -20,7 +20,7 @@ include(GNUInstallDirs)
 
 # Dependencies -------------------------------------------------------------------------------------
 find_package(unified_robot_interface REQUIRED)
-find_package(fmt REQUIRED)
+find_package(fmt REQUIRED) # TODO: migrate to std::format or std::print
 find_package(Threads REQUIRED)
 
 # Kortex search ------------------------------------------------------------------------------------
