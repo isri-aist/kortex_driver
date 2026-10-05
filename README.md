@@ -3,14 +3,14 @@
 A `robot_interface` driver plugin for Kinova Gen3/Gen3 Lite robots via the
 [Kinova Kortex API](https://github.com/Kinovarobotics/kortex).
 
-It implements the `mc_robot_interface::RobotDriver` interface so it can be loaded
+It implements the `robot_interface::RobotDriver` interface so it can be loaded
 by `robot_interface` at runtime as a shared library — no mc_rtc dependency required.
 
 ## Dependencies
 
 | Dependency | Where to get it | Version |
 |---|---|---|
-| `mc_robot_interface` | Built from this repository | — |
+| `unified_robot_interface` | Built from this repository | — |
 | `KortexApi` (C++) | Kinova GitHub or CMake auto-fetch | 2.8.0 (configurable) |
 | `fmt` | System package or CMake | ≥ 8.0 |
 
@@ -63,11 +63,11 @@ Currently, username/password are hardcoded as default values. To change them, yo
 The shared library exports three C symbols consumed by `robot_interface`'s plugin loader:
 
 ```cpp
-void MC_RTC_ROBOT_DRIVER(std::vector<std::string> & classes);
-mc_robot_interface::RobotDriver * create(const std::string & name,
+void ROBOT_DRIVER_PLUGIN(std::vector<std::string> & classes);
+robot_interface::RobotDriver * create(const std::string & name,
                                          const std::string & ip,
                                          const uint16_t & port);
-void destroy(mc_robot_interface::RobotDriver * ptr);
+void destroy(robot_interface::RobotDriver * ptr);
 ```
 
 The driver registers as `"RobotDriverKortex"` and is configured by name in YAML.
