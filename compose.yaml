@@ -1,0 +1,34 @@
+# Runs `uri interface` with the RobotDriverKortex plugin (see Dockerfile).
+#
+#   docker compose up            # pulls the image published by CI
+#   docker compose pull          # updates it to the latest main
+#   docker compose up --build    # builds it locally instead
+#
+# Configs are read from ./etc (mounted on /config). Override with
+# URI_CONFIG_DIR=/some/dir and URI_CONFIG_FILE=<file in it>, e.g.
+# URI_CONFIG_FILE=ursim_ur5e.yaml for the URSim simulator.
+services:
+  interface:
+    build:
+      context: .
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-ghcr.io/isri-aist/unified_robot_interface:latest}
+    image: ${KORTEX_DRIVER_IMAGE:-ghcr.io/isri-aist/kortex_driver:latest}
+    # zenoh reaches the manager, and the driver reaches the UR controller (or
+    # URSim's docker network), over the host network. The UR controller also
+    # connects back to this host for the external-control script.
+    network_mode: host
+    # Needed by the zenoh/shm protocol (shared memory with the manager).
+    ipc: host
+    # `uri` has the cap_sys_nice file capability: exec fails without it.
+    cap_add:
+      - SYS_NICE
+    ulimits:
+      rtprio: 99
+      memlock: -1
+    volumes:
+      - ${URI_CONFIG_DIR:-./etc}:/config:ro
+    command: ["uri", "interface", "-c", "/config/${URI_CONFIG_FILE:-robot_interface.yaml}"]
+    stdin_open: true
+    tty: true
+    restart: "no"

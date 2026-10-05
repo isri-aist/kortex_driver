@@ -79,7 +79,7 @@ Robots:
     robot_interface:
       driver: RobotDriverKortex
       ip: "localhost"
-      # port: 0          # optional, unused (RTDE uses a fixed port)
+      # port: 0          # optional, unused (Kortex has default ports)
 ```
 
 # TODO

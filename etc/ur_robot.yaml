@@ -1,9 +1,0 @@
-name: ur_robot
-
-network_interface:
-  protocol: zenoh
-
-robot_interface:
-  driver: RobotDriverRTDE
-  ip: 150.18.227.205
-  # port: 0   # optional
