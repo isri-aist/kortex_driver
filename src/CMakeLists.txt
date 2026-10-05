@@ -8,7 +8,7 @@ target_include_directories(
 
 target_link_libraries(
   RobotDriverKortex
-  PUBLIC robot_interface::robot_driver_api
+  PUBLIC unified_robot_interface::robot_driver_api
   PRIVATE Kortex::Api fmt::fmt
 )
 
