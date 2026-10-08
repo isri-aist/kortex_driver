@@ -9,13 +9,6 @@ FROM ${BASE_IMAGE}
 
 USER root
 
-# ur_client_library, from ROS's apt repository.
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    apt-get update && apt-get install -y --no-install-recommends \
-      ros-${ROS_DISTRO}-ur-client-library \
-      libfmt-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY . /tmp/kortex_driver
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && cmake -S /tmp/kortex_driver -B /tmp/kortex_driver/build \
