@@ -19,8 +19,8 @@ include(GNUInstallDirs)
 # option(BUILD_TESTING "Build tests" ON)
 
 # Dependencies -------------------------------------------------------------------------------------
-find_package(mc_robot_interface REQUIRED)
-find_package(fmt REQUIRED)
+find_package(unified_robot_interface REQUIRED)
+find_package(fmt REQUIRED) # TODO: migrate to std::format or std::print
 find_package(Threads REQUIRED)
 
 # Kortex search ------------------------------------------------------------------------------------

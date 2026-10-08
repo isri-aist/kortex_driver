@@ -1,18 +1,14 @@
 # kortex_driver
 
-A `robot_interface` driver plugin for Kinova Gen3/Gen3 Lite robots via the
-[Kinova Kortex API](https://github.com/Kinovarobotics/kortex).
+A `robot_interface` driver plugin for Kinova Gen3/Gen3 Lite robots via the [Kinova Kortex API](https://github.com/Kinovarobotics/kortex).
 
-It implements the `mc_robot_interface::RobotDriver` interface so it can be loaded
-by `robot_interface` at runtime as a shared library — no mc_rtc dependency required.
+It implements the `robot_interface::RobotDriver` plugin so it can be loaded by `robot_interface` at runtime as a shared library — no mc_rtc dependency required.
 
 ## Dependencies
 
-| Dependency | Where to get it | Version |
-|---|---|---|
-| `mc_robot_interface` | Built from this repository | — |
-| `KortexApi` (C++) | Kinova GitHub or CMake auto-fetch | 2.8.0 (configurable) |
-| `fmt` | System package or CMake | ≥ 8.0 |
+- [unified_robot_interface](https://isri-aist.github.io/unified_robot_interface/index.html)
+- [KortexApi](https://github.com/Kinovarobotics/Kinova-kortex2_Gen3_G3L)(2.8.0)
+- [fmt](https://fmt.dev)
 
 ### Installing Kinova Kortex API
 
@@ -51,38 +47,29 @@ cmake --install .
 
 The plugin is installed to `lib/robot_driver/libRobotDriverKortex.so`.
 
-## Robot Setup & Configuration
+## Usage
 
-### Session & Authentication
+### Configuration
 
-The driver automatically creates TCP/UDP sessions with the robot. Authentication uses the default Kinova username/password configured on the robot.
-Currently, username/password are hardcoded as default values. To change them, you would need to modify the `RobotDriverKortex::conect()` in `src/RobotDriverKortex.cpp`.
-
-## Plugin API
-
-The shared library exports three C symbols consumed by `robot_interface`'s plugin loader:
-
-```cpp
-void MC_RTC_ROBOT_DRIVER(std::vector<std::string> & classes);
-mc_robot_interface::RobotDriver * create(const std::string & name,
-                                         const std::string & ip,
-                                         const uint16_t & port);
-void destroy(mc_robot_interface::RobotDriver * ptr);
-```
-
-The driver registers as `"RobotDriverKortex"` and is configured by name in YAML.
-Configure it in `robot_manager/etc/mc_rtc_kortex.yaml` under the `robot_interface` key of the
-relevant robot entry:
+Declare TriOrb and all specification in the mc_rtc yaml configuration file under `Robots`.
 
 ```yaml
 Robots:
   kinova:
     module: Kinova
+    interface: interface_template
     robot_interface:
       driver: RobotDriverKortex
-      ip: # robot ip
-      # port: 0          # optional, unused (RTDE uses a fixed port)
+      control_mode: position
+      ip: "localhost"
+      # port: 0          # optional, unused (Kortex has default ports)
+      autostart: true
 ```
+
+### Session & Authentication
+
+The driver automatically creates TCP/UDP sessions with the robot. Authentication uses the default Kinova username/password configured on the robot.
+Currently, username/password are hardcoded as default values. To change them, you would need to modify the `RobotDriverKortex::conect()` in `src/RobotDriverKortex.cpp`.
 
 # TODO
 

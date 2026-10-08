@@ -23,7 +23,7 @@ namespace k_api = Kinova::Api;
 namespace kortex_driver
 {
 
-class RobotDriverKortex final : public mc_robot_interface::RobotDriver
+class RobotDriverKortex final : public robot_interface::RobotDriver
 {
 public:
   RobotDriverKortex(const std::string & ip, uint16_t port = 10000);
@@ -94,10 +94,10 @@ private:
 extern "C"
 {
 
-  MC_ROBOT_DRIVER_DLLAPI void MC_RTC_ROBOT_DRIVER(std::vector<std::string> & classes);
+  ROBOT_DRIVER_DLLAPI void ROBOT_DRIVER_PLUGIN(std::vector<std::string> & classes);
 
-  MC_ROBOT_DRIVER_DLLAPI
-  mc_robot_interface::RobotDriver * create(const std::string & name, const std::string & ip, const uint16_t & port);
+  ROBOT_DRIVER_DLLAPI
+  robot_interface::RobotDriver * create(const std::string & name, const std::string & ip, const uint16_t & port);
 
-  MC_ROBOT_DRIVER_DLLAPI void destroy(mc_robot_interface::RobotDriver * driver);
+  ROBOT_DRIVER_DLLAPI void destroy(robot_interface::RobotDriver * driver);
 }

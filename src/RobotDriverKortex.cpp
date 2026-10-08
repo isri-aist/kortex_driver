@@ -386,17 +386,17 @@ void RobotDriverKortex::validateCommandSize(const std::vector<double> & values) 
 
 extern "C"
 {
-  void MC_RTC_ROBOT_DRIVER(std::vector<std::string> & classes)
+  void ROBOT_DRIVER_PLUGIN(std::vector<std::string> & classes)
   {
     classes.push_back("RobotDriverKortex");
   }
 
-  mc_robot_interface::RobotDriver * create(const std::string &, const std::string & ip, const uint16_t & port)
+  robot_interface::RobotDriver * create(const std::string &, const std::string & ip, const uint16_t & port)
   {
     return new kortex_driver::RobotDriverKortex(ip, port == 0 ? 10000 : port);
   }
 
-  void destroy(mc_robot_interface::RobotDriver * driver)
+  void destroy(robot_interface::RobotDriver * driver)
   {
     delete driver;
   }
