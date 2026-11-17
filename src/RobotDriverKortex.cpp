@@ -384,6 +384,10 @@ void RobotDriverKortex::validateCommandSize(const std::vector<double> & values) 
 
 } // namespace kortex_driver
 
+// Lets robot_interface refuse this plugin (instead of crashing) once the
+// RobotDriver interface changes and the plugin needs a rebuild.
+ROBOT_DRIVER_EXPORT_ABI_VERSION()
+
 extern "C"
 {
   void ROBOT_DRIVER_PLUGIN(std::vector<std::string> & classes)
@@ -391,7 +395,11 @@ extern "C"
     classes.push_back("RobotDriverKortex");
   }
 
-  robot_interface::RobotDriver * create(const std::string &, const std::string & ip, const uint16_t & port)
+  robot_interface::RobotDriver * create(const std::string & /*name*/,
+                                        const std::string & ip,
+                                        const uint16_t & port,
+                                        const std::string & /*config_path*/,
+                                        const std::vector<robot_interface::GripperInfo> & /*grippers*/)
   {
     return new kortex_driver::RobotDriverKortex(ip, port == 0 ? 10000 : port);
   }

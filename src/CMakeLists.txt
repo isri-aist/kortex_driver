@@ -1,4 +1,5 @@
 add_library(RobotDriverKortex SHARED RobotDriverKortex.cpp)
+add_robot_driver(RobotDriverKortex)
 
 target_include_directories(
   RobotDriverKortex
